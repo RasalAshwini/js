@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 5px 0;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px 0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        ul {
+            margin-top: 20px;
+            padding: 0;
+            list-style-type: none;
+        }
+        li {
+            background-color: #f9f9f9;
+            margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Set Operations</h2>
+    <input type="text" id="setA" placeholder="Enter Set A (comma-separated)">
+    <input type="text" id="setB" placeholder="Enter Set B (comma-separated)">
+    
+    <button onclick="performUnion()">Union</button>
+    <button onclick="performIntersection()">Intersection</button>
+    <button onclick="performDifference()">Difference (A - B)</button>
+    <button onclick="performSetDifference()">Set Difference (A Δ B)</button>
+    
+    <p id="result"></p>
+
+    <h3>Operations Log:</h3>
+    <ul id="operationsLog"></ul>
+
+    <script>
+        function getSet(inputId) {
+            // Get the values from the input and return them as a Set after trimming spaces
+            return new Set(document.getElementById(inputId).value.split(',').map(item => item.trim()));
+        }
+
+        function logOperation(operation) {
+            const logElement = document.getElementById('operationsLog');
+            const newLog = document.createElement('li');
+            newLog.textContent = operation;
+            logElement.appendChild(newLog);
+        }
+
+        function performUnion() {
+            const setA = getSet('setA');
+            const setB = getSet('setB');
+            const unionSet = new Set([...setA, ...setB]);
+            document.getElementById('result').innerText = `Union: {${[...unionSet].join(', ')}}`;
+            logOperation(`Union of A and B: {${[...unionSet].join(', ')}}`);
+        }
+
+        function performIntersection() {
+            const setA = getSet('setA');
+            const setB = getSet('setB');
+            const intersectionSet = new Set([...setA].filter(x => setB.has(x)));
+            document.getElementById('result').innerText = `Intersection: {${[...intersectionSet].join(', ')}}`;
+            logOperation(`Intersection of A and B: {${[...intersectionSet].join(', ')}}`);
+        }
+
+        function performDifference() {
+            const setA = getSet('setA');
+            const setB = getSet('setB');
+            const differenceSet = new Set([...setA].filter(x => !setB.has(x)));
+            document.getElementById('result').innerText = `Difference (A - B): {${[...differenceSet].join(', ')}}`;
+            logOperation(`Difference (A - B): {${[...differenceSet].join(', ')}}`);
+        }
+
+        function performSetDifference() {
+            const setA = getSet('setA');
+            const setB = getSet('setB');
+            const symDifferenceSet = new Set([...setA].filter(x => !setB.has(x)).concat([...setB].filter(x => !setA.has(x))));
+            document.getElementById('result').innerText = `Set Difference (A Δ B): {${[...symDifferenceSet].join(', ')}}`;
+            logOperation(`Set Difference (A Δ B): {${[...symDifferenceSet].join(', ')}}`);
+        }
+    </script>
+</body>
+</html>

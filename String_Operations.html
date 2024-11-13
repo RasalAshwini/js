@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>String Operations</h1>
+    <input type="text" id="inputString" placeholder="Enter a string">
+    <br>
+    <input type="text" id="charToReplace" placeholder="Character to replace">
+    <input type="text" id="replaceWithChar" placeholder="Replace with">
+    <button onclick="performOperations()">Perform Operations</button>
+    
+    <h2>Results:</h2>
+    <p id="reversed"></p>
+    <p id="replaced"></p>
+    <p id="palindrome"></p>
+
+    <script>
+        function performOperations() {
+            const str = document.getElementById('inputString').value;
+            const charToReplace = document.getElementById('charToReplace').value;
+            const replaceWithChar = document.getElementById('replaceWithChar').value;
+
+            // Reverse string
+            const reversedString = str.split('').reverse().join('');
+            document.getElementById('reversed').innerText = 'Reversed String: ' + reversedString;
+
+            // Replace specified character
+            if (charToReplace && replaceWithChar) {
+                const replacedString = str.split(charToReplace).join(replaceWithChar);
+                document.getElementById('replaced').innerText = 'Replaced String: ' + replacedString;
+            } else {
+                document.getElementById('replaced').innerText = 'Replaced String: Please provide both characters for replacement';
+            }
+
+            // Check if string is palindrome
+            const isPalindrome = str === reversedString;
+            document.getElementById('palindrome').innerText = 'Is Palindrome: ' + (isPalindrome ? 'Yes' : 'No');
+        }
+    </script>
+</body>
+</html>
